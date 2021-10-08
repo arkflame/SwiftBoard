@@ -1,12 +1,12 @@
-package me.sammwy.example;
+package dev._2lstudios.swiftboard;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.sammwy.example.commands.ExampleCommand;
-import me.sammwy.example.listeners.PlayerJoinListener;
-import me.sammwy.example.tasks.ExampleTask;
+import dev._2lstudios.swiftboard.commands.SwiftBoardCommand;
+import dev._2lstudios.swiftboard.listeners.PlayerJoinListener;
+import dev._2lstudios.swiftboard.tasks.ExampleTask;
 
-public class ExamplePlugin extends JavaPlugin {
+public class SwiftBoard extends JavaPlugin {
     
     @Override
     public void onEnable () {
@@ -14,10 +14,10 @@ public class ExamplePlugin extends JavaPlugin {
         this.saveDefaultConfig();
 
         // Set static instance
-        ExamplePlugin.instance = this;
+        SwiftBoard.instance = this;
 
         // Register the example command
-        this.getCommand("example").setExecutor(new ExampleCommand());
+        this.getCommand("swiftboard").setExecutor(new SwiftBoardCommand());
         
         // Register the example listener
         this.getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -27,9 +27,9 @@ public class ExamplePlugin extends JavaPlugin {
         this.getServer().getScheduler().runTaskTimer(this, new ExampleTask(), taskRepeatEvery, taskRepeatEvery);
     }
 
-    private static ExamplePlugin instance;
+    private static SwiftBoard instance;
 
-    public static ExamplePlugin getInstance () {
-        return ExamplePlugin.instance;
+    public static SwiftBoard getInstance () {
+        return SwiftBoard.instance;
     }
 }

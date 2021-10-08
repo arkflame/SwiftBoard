@@ -2,19 +2,19 @@
     <modelVersion>4.0.0</modelVersion>
     
     <!-- Project information -->
-    <groupId>me.sammwy</groupId>
-    <artifactId>ExamplePlugin</artifactId>
+    <groupId>dev._2lstudios</groupId>
+    <artifactId>SwiftBoard</artifactId>
     <packaging>jar</packaging>
 
     <!-- Plugin Information -->
-    <name>ExamplePlugin</name>
-    <description>This is just an example plugin</description>
+    <name>SwiftBoard</name>
+    <description>Asynchronous Scoreboard API using packets.</description>
     <version>0.0.1</version>
-    <url>https://twitter.com/sammwy</url>
+    <url>https://github.com/2lstudios-mc/SwiftBoard</url>
 
     <properties>
-        <author>Sammwy</author>
-        <mainClass>me.sammwy.example.ExamplePlugin</mainClass>
+        <author>LinsaFTW</author>
+        <mainClass>dev._2lstudios.swiftboard.SwiftBoard</mainClass>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
