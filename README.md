@@ -1,3 +1,3 @@
-# Bukkit Boilerplate
+# SwiftBoard
 
-Sample project to create Plugins for Bukkit.
+Asynchronous Scoreboard API using packets.
