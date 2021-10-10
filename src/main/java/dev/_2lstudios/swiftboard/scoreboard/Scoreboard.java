@@ -11,6 +11,7 @@ import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.EnumWrappers.ScoreboardAction;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
@@ -34,8 +35,8 @@ public class Scoreboard {
             final PacketContainer packet = protocolManager
                     .createPacket(PacketType.Play.Server.SCOREBOARD_DISPLAY_OBJECTIVE);
 
-            packet.getIntegers().write(0, position);
-            packet.getStrings().write(0, objectiveName);
+            packet.getIntegers().writeSafely(0, position);
+            packet.getStrings().writeSafely(0, objectiveName);
 
             protocolManager.sendServerPacket(player, packet);
             objective.setPosition(position);
@@ -55,18 +56,11 @@ public class Scoreboard {
         if (!objectives.containsKey(objectiveName)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_OBJECTIVE);
 
-            packet.getStrings().write(0, objectiveName);
-            packet.getIntegers().write(0, 0);
-
-            if (packet.getStrings().size() > 1) {
-                packet.getStrings().write(1, displayName);
-            }
-
-            if (packet.getChatComponents().size() > 0) {
-                packet.getChatComponents().write(0, WrappedChatComponent.fromText(displayName));
-            }
-
-            packet.getEnumModifier(HealthDisplay.class, 2).write(0, healthDisplay);
+            packet.getStrings().writeSafely(0, objectiveName);
+            packet.getIntegers().writeSafely(0, 0);
+            packet.getStrings().writeSafely(1, displayName);
+            packet.getChatComponents().writeSafely(0, WrappedChatComponent.fromText(displayName));
+            packet.getEnumModifier(HealthDisplay.class, 2).writeSafely(0, healthDisplay);
 
             protocolManager.sendServerPacket(player, packet);
 
@@ -78,8 +72,8 @@ public class Scoreboard {
         if (objectives.containsKey(objectiveName)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_OBJECTIVE);
 
-            packet.getStrings().write(0, objectiveName);
-            packet.getIntegers().write(0, 1);
+            packet.getStrings().writeSafely(0, objectiveName);
+            packet.getIntegers().writeSafely(0, 1);
 
             protocolManager.sendServerPacket(player, packet);
             objectives.remove(objectiveName);
@@ -99,18 +93,11 @@ public class Scoreboard {
         if (objective != null) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_OBJECTIVE);
 
-            packet.getStrings().write(0, objectiveName);
-            packet.getIntegers().write(0, 2);
-
-            if (packet.getStrings().size() > 1) {
-                packet.getStrings().write(1, displayName);
-            }
-
-            if (packet.getChatComponents().size() > 0) {
-                packet.getChatComponents().write(0, WrappedChatComponent.fromText(displayName));
-            }
-
-            packet.getEnumModifier(HealthDisplay.class, 2).write(0, healthDisplay);
+            packet.getStrings().writeSafely(0, objectiveName);
+            packet.getIntegers().writeSafely(0, 2);
+            packet.getStrings().writeSafely(1, displayName);
+            packet.getChatComponents().writeSafely(0, WrappedChatComponent.fromText(displayName));
+            packet.getEnumModifier(HealthDisplay.class, 2).writeSafely(0, healthDisplay);
 
             protocolManager.sendServerPacket(player, packet);
             objective.setDisplayName(displayName);
@@ -124,10 +111,10 @@ public class Scoreboard {
         if (objective != null && (!objective.hasScore(entity) || objective.getScore(entity) != score)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_SCORE);
 
-            packet.getStrings().write(0, entity);
-            packet.getScoreboardActions().write(0, ScoreboardAction.CHANGE);
-            packet.getStrings().write(1, objectiveName);
-            packet.getIntegers().write(0, score);
+            packet.getStrings().writeSafely(0, entity);
+            packet.getScoreboardActions().writeSafely(0, ScoreboardAction.CHANGE);
+            packet.getStrings().writeSafely(1, objectiveName);
+            packet.getIntegers().writeSafely(0, score);
 
             protocolManager.sendServerPacket(player, packet);
 
@@ -141,9 +128,9 @@ public class Scoreboard {
         if (objective != null && objective.hasScore(entity)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_SCORE);
 
-            packet.getStrings().write(0, entity);
-            packet.getScoreboardActions().write(0, ScoreboardAction.REMOVE);
-            packet.getStrings().write(1, objectiveName);
+            packet.getStrings().writeSafely(0, entity);
+            packet.getScoreboardActions().writeSafely(0, ScoreboardAction.REMOVE);
+            packet.getStrings().writeSafely(1, objectiveName);
 
             protocolManager.sendServerPacket(player, packet);
 
@@ -164,17 +151,19 @@ public class Scoreboard {
         if (!teams.containsKey(teamName)) {
             final Team team = new Team(teamDisplayName, prefix, suffix, entities);
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
+            final StructureModifier<String> strings = packet.getStrings();
+            final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
 
-            packet.getStrings().writeSafely(0, teamName); // team name
+            strings.writeSafely(0, teamName); // team name
             packet.getIntegers().writeSafely(1, 0); // mode
 
-            packet.getStrings().writeSafely(1, teamDisplayName); // team display name
-            packet.getStrings().writeSafely(2, prefix); // prefix
-            packet.getStrings().writeSafely(3, suffix); // suffix
+            strings.writeSafely(1, teamDisplayName); // team display name
+            strings.writeSafely(2, prefix); // prefix
+            strings.writeSafely(3, suffix); // suffix
 
-            packet.getChatComponents().writeSafely(0, WrappedChatComponent.fromText(teamDisplayName)); // team display
-            packet.getChatComponents().writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
-            packet.getChatComponents().writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
+            chatComponents.writeSafely(0, WrappedChatComponent.fromText(teamDisplayName)); // team display
+            chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
+            chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
 
             packet.getIntegers().writeSafely(0, entities.size()); // player count
             packet.getSpecificModifier(Collection.class).writeSafely(0, entities); // players
@@ -193,8 +182,8 @@ public class Scoreboard {
         if (teams.containsKey(teamName)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
 
-            packet.getStrings().write(0, teamName); // team name
-            packet.getIntegers().write(1, 1); // mode
+            packet.getStrings().writeSafely(0, teamName); // team name
+            packet.getIntegers().writeSafely(1, 1); // mode
 
             protocolManager.sendServerPacket(player, packet);
             teams.remove(teamName);
@@ -214,12 +203,13 @@ public class Scoreboard {
 
             if (team.hasChanges(teamDisplayName, prefix, suffix)) {
                 final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
+                final StructureModifier<String> strings = packet.getStrings();
 
-                packet.getStrings().writeSafely(0, teamName);
+                strings.writeSafely(0, teamName);
                 packet.getIntegers().writeSafely(1, 2);
-                packet.getStrings().writeSafely(1, teamDisplayName);
-                packet.getStrings().writeSafely(2, prefix);
-                packet.getStrings().writeSafely(3, suffix);
+                strings.writeSafely(1, teamDisplayName);
+                strings.writeSafely(2, prefix);
+                strings.writeSafely(3, suffix);
 
                 protocolManager.sendServerPacket(player, packet);
                 team.update(teamDisplayName, prefix, suffix);
