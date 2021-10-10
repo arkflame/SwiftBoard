@@ -38,8 +38,7 @@ public class SwiftSidebar implements Runnable {
     }
 
     private String format(final Player player, final String line) {
-return ChatColor.translateAlternateColorCodes('&',
-PlaceholderAPI.setPlaceholders(player, line));
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, line));
     }
 
     private String sendLine(final Scoreboard scoreboard, final String line, final int index)
@@ -53,14 +52,14 @@ PlaceholderAPI.setPlaceholders(player, line));
 
             final String formattedLine = emptyBuilder.toString();
 
-            scoreboard.updateScore("swiftboard", formattedLine, index);
+            scoreboard.updateScore("swiftsidebar", formattedLine, index);
 
             return formattedLine;
         } else {
             final Player player = scoreboard.getPlayer();
             final String formattedLine = format(player, line);
 
-            scoreboard.updateScore("swiftboard", formattedLine, index);
+            scoreboard.updateScore("swiftsidebar", formattedLine, index);
 
             return formattedLine;
         }
@@ -73,15 +72,17 @@ PlaceholderAPI.setPlaceholders(player, line));
             if (scoreboardLines.containsKey(player)) {
                 final List<String> lines = scoreboardLines.get(player);
 
-                if (lines.size() > 1) {
+                if (!lines.isEmpty()) {
                     final List<String> sentLines = new ArrayList<>();
                     final String title = format(player, lines.get(lines.size() - 1));
 
-                    if (!scoreboard.containsObjective("swiftboard")) {
-                        scoreboard.createObjective("swiftboard", title, HealthDisplay.INTEGER);
-                        scoreboard.displayObjective(1, "swiftboard");
+                    if (scoreboard.containsObjective("swiftsidebar")) {
+                        if (!title.equals(scoreboard.getObjective("swiftsidebar").getDisplayName())) {
+                            scoreboard.updateObjective("swiftsidebar", title, HealthDisplay.INTEGER);
+                        }
                     } else {
-                        scoreboard.updateObjective("swiftboard", title, HealthDisplay.INTEGER);
+                        scoreboard.createObjective("swiftsidebar", title, HealthDisplay.INTEGER);
+                        scoreboard.displayObjective(1, "swiftsidebar");
                     }
 
                     try {
@@ -95,7 +96,7 @@ PlaceholderAPI.setPlaceholders(player, line));
                             if (currentLines.containsKey(player)) {
                                 for (final String currentLine : currentLines.get(player)) {
                                     if (!sentLines.contains(currentLine)) {
-                                        scoreboard.removeScore("swiftboard", currentLine);
+                                        scoreboard.removeScore("swiftsidebar", currentLine);
                                     }
                                 }
                             }
@@ -103,9 +104,11 @@ PlaceholderAPI.setPlaceholders(player, line));
                             currentLines.put(player, sentLines);
                         }
                     }
+                } else {
+                    scoreboard.removeObjective("swiftsidebar");
                 }
             } else {
-                scoreboard.removeObjective("swiftboard");
+                scoreboard.removeObjective("swiftsidebar");
             }
         }
     }

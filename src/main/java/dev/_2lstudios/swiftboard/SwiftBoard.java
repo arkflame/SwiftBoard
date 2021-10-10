@@ -34,8 +34,8 @@ public class SwiftBoard extends JavaPlugin {
         final SwiftSidebar swiftSidebar = new SwiftSidebar(this, scoreboardManager);
         final SwiftNametag swiftNametag = new SwiftNametag(this, scoreboardManager);
 
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(swiftSidebar, scoreboardManager), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuitListener(scoreboardManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(scoreboardManager, swiftSidebar, swiftNametag), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(scoreboardManager, swiftSidebar, swiftNametag), this);
 
         getServer().getScheduler().runTaskTimer(this, swiftHealth, 1L, 1L);
         getServer().getScheduler().runTaskTimer(this, swiftSidebar, 1L, 1L);

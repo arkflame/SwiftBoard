@@ -37,7 +37,6 @@ public class Scoreboard {
 
             packet.getIntegers().writeSafely(0, position);
             packet.getStrings().writeSafely(0, objectiveName);
-
             protocolManager.sendServerPacket(player, packet);
             objective.setPosition(position);
         }
@@ -61,7 +60,6 @@ public class Scoreboard {
             packet.getStrings().writeSafely(1, displayName);
             packet.getChatComponents().writeSafely(0, WrappedChatComponent.fromText(displayName));
             packet.getEnumModifier(HealthDisplay.class, 2).writeSafely(0, healthDisplay);
-
             protocolManager.sendServerPacket(player, packet);
 
             objectives.put(objectiveName, new Objective(objectiveName, displayName));
@@ -74,7 +72,6 @@ public class Scoreboard {
 
             packet.getStrings().writeSafely(0, objectiveName);
             packet.getIntegers().writeSafely(0, 1);
-
             protocolManager.sendServerPacket(player, packet);
             objectives.remove(objectiveName);
         }
@@ -98,7 +95,6 @@ public class Scoreboard {
             packet.getStrings().writeSafely(1, displayName);
             packet.getChatComponents().writeSafely(0, WrappedChatComponent.fromText(displayName));
             packet.getEnumModifier(HealthDisplay.class, 2).writeSafely(0, healthDisplay);
-
             protocolManager.sendServerPacket(player, packet);
             objective.setDisplayName(displayName);
         }
@@ -115,7 +111,6 @@ public class Scoreboard {
             packet.getScoreboardActions().writeSafely(0, ScoreboardAction.CHANGE);
             packet.getStrings().writeSafely(1, objectiveName);
             packet.getIntegers().writeSafely(0, score);
-
             protocolManager.sendServerPacket(player, packet);
 
             objective.updateScore(entity, score);
@@ -131,7 +126,6 @@ public class Scoreboard {
             packet.getStrings().writeSafely(0, entity);
             packet.getScoreboardActions().writeSafely(0, ScoreboardAction.REMOVE);
             packet.getStrings().writeSafely(1, objectiveName);
-
             protocolManager.sendServerPacket(player, packet);
 
             objective.updateScore(entity, -1);
@@ -167,7 +161,6 @@ public class Scoreboard {
 
             packet.getIntegers().writeSafely(0, entities.size()); // player count
             packet.getSpecificModifier(Collection.class).writeSafely(0, entities); // players
-
             protocolManager.sendServerPacket(player, packet);
             teams.put(teamName, team);
         }
@@ -184,7 +177,6 @@ public class Scoreboard {
 
             packet.getStrings().writeSafely(0, teamName); // team name
             packet.getIntegers().writeSafely(1, 1); // mode
-
             protocolManager.sendServerPacket(player, packet);
             teams.remove(teamName);
         }
@@ -210,7 +202,6 @@ public class Scoreboard {
                 strings.writeSafely(1, teamDisplayName);
                 strings.writeSafely(2, prefix);
                 strings.writeSafely(3, suffix);
-
                 protocolManager.sendServerPacket(player, packet);
                 team.update(teamDisplayName, prefix, suffix);
             }

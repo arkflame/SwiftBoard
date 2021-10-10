@@ -3,24 +3,24 @@ package dev._2lstudios.swiftboard.listeners;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
-import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
+import dev._2lstudios.swiftboard.swift.SwiftNametag;
 import dev._2lstudios.swiftboard.swift.SwiftSidebar;
 
 public class PlayerJoinListener implements Listener {
-    private final SwiftSidebar swiftSidebar;
     private final ScoreboardManager scoreboardManager;
+    private final SwiftSidebar swiftSidebar;
+    private final SwiftNametag swiftNametag;
 
-    public PlayerJoinListener(final SwiftSidebar swiftSidebar, final ScoreboardManager scoreboardManager) {
+    public PlayerJoinListener(final ScoreboardManager scoreboardManager, final SwiftSidebar swiftSidebar, final SwiftNametag swiftNametag) {
         this.swiftSidebar = swiftSidebar;
         this.scoreboardManager = scoreboardManager;
+        this.swiftNametag = swiftNametag;
     }
 
     @EventHandler(ignoreCancelled = true)
@@ -28,10 +28,7 @@ public class PlayerJoinListener implements Listener {
         final Player player = event.getPlayer();
 
         try {
-            final Scoreboard scoreboard = scoreboardManager.create(player);
-
-            scoreboard.createObjective("swiftnametag", "swiftnametag", HealthDisplay.INTEGER);
-            scoreboard.displayObjective(0, "swiftnametag");
+            scoreboardManager.create(player);
 
             final List<String> lines = new ArrayList<>();
 
@@ -42,9 +39,7 @@ public class PlayerJoinListener implements Listener {
             lines.add("");
             lines.add("&b2lstudios.dev");
             swiftSidebar.setLines(player, lines);
-
-            scoreboard.createObjective("swifthealth", ChatColor.RED + "❤", HealthDisplay.INTEGER);
-            scoreboard.displayObjective(2, "swifthealth");
+            swiftNametag.playerJoin(player);
         } catch (final Exception e) {
             e.printStackTrace();
         }
