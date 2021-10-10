@@ -4,6 +4,7 @@ author: ${author}
 main: ${mainClass}
 version: ${version}
 url: ${url}
+depend: [ ProtocolLib ]
 commands:
   swiftboard:
     description: "Manage SwiftBoard stuff."
