@@ -29,16 +29,6 @@ public class PlayerJoinListener implements Listener {
 
         try {
             scoreboardManager.create(player);
-
-            final List<String> lines = new ArrayList<>();
-
-            lines.add("&b&lSwiftBoard");
-            lines.add("");
-            lines.add("&fUptime: &a%server_uptime%");
-            lines.add("&fLevel: &a%player_level%");
-            lines.add("");
-            lines.add("&b2lstudios.dev");
-            swiftSidebar.setLines(player, lines);
             swiftNametag.playerJoin(player);
         } catch (final Exception e) {
             e.printStackTrace();
