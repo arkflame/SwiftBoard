@@ -15,9 +15,24 @@ import dev._2lstudios.swiftboard.swift.SwiftSidebar;
 
 public class SwiftBoard extends JavaPlugin {
     private static ScoreboardManager scoreboardManager;
+    private static SwiftHealth swiftHealth;
+    private static SwiftSidebar swiftSidebar;
+    private static SwiftNametag swiftNametag;
 
     public static ScoreboardManager getScoreboardManager() {
         return scoreboardManager;
+    }
+
+    public static SwiftHealth getSwiftHealth() {
+        return swiftHealth;
+    }
+
+    public static SwiftSidebar getSwiftSidebar() {
+        return swiftSidebar;
+    }
+
+    public static SwiftNametag getSwiftNametag() {
+        return swiftNametag;
     }
 
     @Override
@@ -30,9 +45,9 @@ public class SwiftBoard extends JavaPlugin {
             scoreboardManager.create(player);
         }
 
-        final SwiftHealth swiftHealth = new SwiftHealth(this, scoreboardManager);
-        final SwiftSidebar swiftSidebar = new SwiftSidebar(this, scoreboardManager);
-        final SwiftNametag swiftNametag = new SwiftNametag(this, scoreboardManager);
+        swiftHealth = new SwiftHealth(this, scoreboardManager);
+        swiftSidebar = new SwiftSidebar(this, scoreboardManager);
+        swiftNametag = new SwiftNametag(this, scoreboardManager);
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(scoreboardManager, swiftSidebar, swiftNametag), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(scoreboardManager, swiftSidebar, swiftNametag), this);
