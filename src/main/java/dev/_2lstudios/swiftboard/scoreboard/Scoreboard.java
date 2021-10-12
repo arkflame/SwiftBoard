@@ -196,12 +196,19 @@ public class Scoreboard {
             if (team.hasChanges(teamDisplayName, prefix, suffix)) {
                 final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
                 final StructureModifier<String> strings = packet.getStrings();
+                final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
 
-                strings.writeSafely(0, teamName);
-                packet.getIntegers().writeSafely(1, 2);
-                strings.writeSafely(1, teamDisplayName);
-                strings.writeSafely(2, prefix);
-                strings.writeSafely(3, suffix);
+                strings.writeSafely(0, teamName); // team name
+                packet.getIntegers().writeSafely(1, 2); // mode
+
+                strings.writeSafely(1, teamDisplayName); // team display name
+                strings.writeSafely(2, prefix); // prefix
+                strings.writeSafely(3, suffix); // suffix
+    
+                chatComponents.writeSafely(0, WrappedChatComponent.fromText(teamDisplayName)); // team display
+                chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
+                chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
+
                 protocolManager.sendServerPacket(player, packet);
                 team.update(teamDisplayName, prefix, suffix);
             }
