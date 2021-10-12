@@ -83,8 +83,8 @@ public class Scoreboard {
         }
     }
 
-    public void updateObjective(final String objectiveName, final String displayName,
-            final HealthDisplay healthDisplay) throws InvocationTargetException {
+    public void updateObjective(final String objectiveName, final String displayName, final HealthDisplay healthDisplay)
+            throws InvocationTargetException {
         final Objective objective = getObjective(objectiveName);
 
         if (objective != null) {
@@ -140,29 +140,50 @@ public class Scoreboard {
         return teams.containsKey(name);
     }
 
+    private PacketContainer generateTeamUpdatePacket(final int mode, final String name, final String displayName, final String prefix, final String suffix) {
+        final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
+        final StructureModifier<String> strings = packet.getStrings();
+        final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
+
+        strings.writeSafely(0, name); // team name
+        packet.getIntegers().writeSafely(1, 0); // mode
+
+        strings.writeSafely(1, displayName); // team display name
+        strings.writeSafely(2, prefix); // prefix
+        strings.writeSafely(3, suffix); // suffix
+
+        chatComponents.writeSafely(0, WrappedChatComponent.fromText(displayName)); // team display
+        chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
+        chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
+
+        return packet;
+    }
+
     public void createTeam(final String teamName, final String teamDisplayName, final String prefix,
             final String suffix, final List<String> entities) throws InvocationTargetException {
         if (!teams.containsKey(teamName)) {
             final Team team = new Team(teamDisplayName, prefix, suffix, entities);
-            final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
-            final StructureModifier<String> strings = packet.getStrings();
-            final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
-
-            strings.writeSafely(0, teamName); // team name
-            packet.getIntegers().writeSafely(1, 0); // mode
-
-            strings.writeSafely(1, teamDisplayName); // team display name
-            strings.writeSafely(2, prefix); // prefix
-            strings.writeSafely(3, suffix); // suffix
-
-            chatComponents.writeSafely(0, WrappedChatComponent.fromText(teamDisplayName)); // team display
-            chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
-            chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
+            final PacketContainer packet = generateTeamUpdatePacket(0, teamName, teamDisplayName, prefix, suffix);
 
             packet.getIntegers().writeSafely(0, entities.size()); // player count
             packet.getSpecificModifier(Collection.class).writeSafely(0, entities); // players
+
             protocolManager.sendServerPacket(player, packet);
             teams.put(teamName, team);
+        }
+    }
+
+    public void updateTeam(final String teamName, final String teamDisplayName, final String prefix,
+            final String suffix) throws InvocationTargetException {
+        if (teams.containsKey(teamName)) {
+            final Team team = getTeam(teamName);
+
+            if (team.hasChanges(teamDisplayName, prefix, suffix)) {
+                final PacketContainer packet = generateTeamUpdatePacket(2, teamName, teamDisplayName, prefix, suffix);
+
+                protocolManager.sendServerPacket(player, packet);
+                team.update(teamDisplayName, prefix, suffix);
+            }
         }
     }
 
@@ -177,6 +198,7 @@ public class Scoreboard {
 
             packet.getStrings().writeSafely(0, teamName); // team name
             packet.getIntegers().writeSafely(1, 1); // mode
+            
             protocolManager.sendServerPacket(player, packet);
             teams.remove(teamName);
         }
@@ -185,33 +207,6 @@ public class Scoreboard {
     public void clearTeams() throws InvocationTargetException {
         for (final String teamName : teams.keySet()) {
             removeTeam(teamName);
-        }
-    }
-
-    public void updateTeam(final String teamName, final String teamDisplayName, final String prefix,
-            final String suffix) throws InvocationTargetException {
-        if (teams.containsKey(teamName)) {
-            final Team team = getTeam(teamName);
-
-            if (team.hasChanges(teamDisplayName, prefix, suffix)) {
-                final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
-                final StructureModifier<String> strings = packet.getStrings();
-                final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
-
-                strings.writeSafely(0, teamName); // team name
-                packet.getIntegers().writeSafely(1, 2); // mode
-
-                strings.writeSafely(1, teamDisplayName); // team display name
-                strings.writeSafely(2, prefix); // prefix
-                strings.writeSafely(3, suffix); // suffix
-    
-                chatComponents.writeSafely(0, WrappedChatComponent.fromText(teamDisplayName)); // team display
-                chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
-                chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
-
-                protocolManager.sendServerPacket(player, packet);
-                team.update(teamDisplayName, prefix, suffix);
-            }
         }
     }
 
