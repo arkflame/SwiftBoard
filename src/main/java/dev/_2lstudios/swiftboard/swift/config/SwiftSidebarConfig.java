@@ -12,12 +12,14 @@ public class SwiftSidebarConfig {
     private Map<String, List<String>> worlds;
 
     public void update(final ConfigurationSection section) {
+        final ConfigurationSection worldsSection = section.getConfigurationSection("worlds");
+
         this.enabled = section.getBoolean("enabled");
         this.updateTicks = section.getInt("update-ticks");
         this.worlds = new HashMap<>();
 
-        for (final String key : section.getKeys(false)) {
-            final List<String> lines = section.getStringList(key);
+        for (final String key : worldsSection.getKeys(false)) {
+            final List<String> lines = worldsSection.getStringList(key);
 
             worlds.put(key, lines);
         }
