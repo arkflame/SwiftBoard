@@ -32,6 +32,6 @@ public class SwiftSidebarConfig {
     }
 
     public List<String> getLines(final String worldName) {
-        return worlds.getOrDefault(worldName, null);
+        return worlds.getOrDefault(worldName, worlds.getOrDefault("default", null));
     }
 }
