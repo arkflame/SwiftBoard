@@ -9,6 +9,7 @@ import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
 import dev._2lstudios.swiftboard.swift.config.SwiftHealthConfig;
+import net.md_5.bungee.api.ChatColor;
 
 public class SwiftHealth implements Runnable {
     private final Plugin plugin;
@@ -21,6 +22,10 @@ public class SwiftHealth implements Runnable {
         this.swiftHealthConfig = swiftHealthConfig;
     }
 
+    private String colors(final String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
     @Override
     public void run() {
         try {
@@ -29,7 +34,7 @@ public class SwiftHealth implements Runnable {
                     final Player player = sb2.getPlayer();
 
                     if (!sb1.containsObjective("swifthealth")) {
-                        sb1.createObjective("swifthealth", swiftHealthConfig.getIcon(), HealthDisplay.INTEGER);
+                        sb1.createObjective("swifthealth", colors(swiftHealthConfig.getIcon()), HealthDisplay.INTEGER);
                         sb1.displayObjective(2, "swifthealth");
                     }
 

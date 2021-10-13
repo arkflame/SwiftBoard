@@ -21,4 +21,4 @@ nametag:
 health:
   enabled: true
   update-ticks: 5
-  icon: "&c❤"
+  icon: "&c\u2764"
