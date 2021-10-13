@@ -1,6 +1,24 @@
-messages:
-  from-command: "&eHello world from Command."
-  from-listener: "&aHello world from Listener."
-  from-task: "&dHello world from Task."
+# Shows a sidebar to players
+sidebar:
+  enabled: true
+  update-ticks: 20
+  worlds:
+    default:
+      - "&b&lSwiftBoard"
+      - ""
+      - "&f&oThis is SwiftBoard!"
+      - ""
+      - "&bmyserver.com"
 
-task-repeat-every: 3
+# Adds prefix/suffix on player names
+nametag:
+  enabled: true
+  update-ticks: -1
+  prefix: "&a"
+  suffix: ""
+
+# Shows health below player names
+health:
+  enabled: true
+  update-ticks: 5
+  icon: "&c❤"
