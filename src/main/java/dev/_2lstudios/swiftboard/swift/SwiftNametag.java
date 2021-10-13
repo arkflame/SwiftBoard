@@ -24,13 +24,16 @@ public class SwiftNametag implements Runnable {
         this.scoreboardManager = scoreboardManager;
     }
 
+    private String setPlaceholders(final Player player, final String string) {
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, string));
+    }
+
     public String getPrefix(final Player player) {
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, "&a~&7"));
+        return setPlaceholders(player, "&a~&7");
     }
 
     public String getSuffix(final Player player) {
-        return ChatColor.translateAlternateColorCodes('&',
-        PlaceholderAPIHook.setPlaceholders(player, "&c %player_health%"));
+        return setPlaceholders(player, "&c %player_health%");
     }
 
     public void removePlayer(final Player player) {
