@@ -5,7 +5,7 @@ main: ${mainClass}
 version: ${version}
 url: ${url}
 api-version: 1.13
-soft-depend:
+softdepend:
   - PlaceholderAPI
 depend:
   - ProtocolLib
