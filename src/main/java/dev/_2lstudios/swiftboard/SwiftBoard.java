@@ -62,14 +62,25 @@ public class SwiftBoard extends JavaPlugin {
         final SwiftSidebarConfig swiftSidebarConfig = swiftConfig.getSwiftSidebarConfig();
 
         scoreboardManager = new ScoreboardManager();
-
-        for (final Player player : getServer().getOnlinePlayers()) {
-            scoreboardManager.create(player);
-        }
-
         swiftHealth = new SwiftHealth(this, scoreboardManager, swiftHealthConfig);
         swiftSidebar = new SwiftSidebar(this, scoreboardManager);
         swiftNametag = new SwiftNametag(this, scoreboardManager, swiftNametagConfig);
+
+        for (final Player player : getServer().getOnlinePlayers()) {
+            scoreboardManager.create(player);
+
+            if (swiftSidebarConfig.isEnabled()) {
+                swiftSidebar.setLines(player, swiftSidebarConfig.getLines(player.getWorld().getName()));
+            }
+    
+            try {
+                if (swiftNametagConfig.isEnabled()) {
+                    swiftNametag.playerJoin(player);
+                }
+            } catch (final InvocationTargetException e) {
+                e.printStackTrace();
+            }
+        }
 
         pluginManager.registerEvents(new PlayerChangedWorldListener(swiftSidebar, swiftSidebarConfig), this);
         pluginManager.registerEvents(
