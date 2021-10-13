@@ -52,9 +52,9 @@ public class SwiftBoard extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(scoreboardManager, swiftSidebar, swiftNametag), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(scoreboardManager, swiftSidebar, swiftNametag), this);
 
-        getServer().getScheduler().runTaskTimer(this, swiftHealth, 1L, 1L);
-        getServer().getScheduler().runTaskTimer(this, swiftSidebar, 1L, 1L);
-        getServer().getScheduler().runTaskTimer(this, swiftNametag, 1L, 1L);
+        getServer().getScheduler().runTaskTimerAsynchronously(this, swiftHealth, 1L, 1L);
+        getServer().getScheduler().runTaskTimerAsynchronously(this, swiftSidebar, 1L, 1L);
+        getServer().getScheduler().runTaskTimerAsynchronously(this, swiftNametag, 1L, 1L);
     }
 
     @Override
