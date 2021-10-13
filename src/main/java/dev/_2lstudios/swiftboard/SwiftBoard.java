@@ -72,12 +72,24 @@ public class SwiftBoard extends JavaPlugin {
         swiftNametag = new SwiftNametag(this, scoreboardManager, swiftNametagConfig);
 
         pluginManager.registerEvents(new PlayerChangedWorldListener(swiftSidebar, swiftSidebarConfig), this);
-        pluginManager.registerEvents(new PlayerJoinListener(scoreboardManager, swiftSidebar, swiftNametag, swiftSidebarConfig), this);
+        pluginManager.registerEvents(
+                new PlayerJoinListener(scoreboardManager, swiftSidebar, swiftNametag, swiftNametagConfig, swiftSidebarConfig), this);
         pluginManager.registerEvents(new PlayerQuitListener(scoreboardManager, swiftSidebar, swiftNametag), this);
 
-        scheduler.runTaskTimerAsynchronously(this, swiftHealth, swiftHealthConfig.getUpdateTicks(), swiftHealthConfig.getUpdateTicks());
-        scheduler.runTaskTimerAsynchronously(this, swiftSidebar, swiftSidebarConfig.getUpdateTicks(), swiftSidebarConfig.getUpdateTicks());
-        scheduler.runTaskTimerAsynchronously(this, swiftNametag, swiftNametagConfig.getUpdateTicks(), swiftNametagConfig.getUpdateTicks());
+        if (swiftHealthConfig.isEnabled() && swiftHealthConfig.getUpdateTicks() > 0) {
+            scheduler.runTaskTimerAsynchronously(this, swiftHealth, swiftHealthConfig.getUpdateTicks(),
+                    swiftHealthConfig.getUpdateTicks());
+        }
+
+        if (swiftSidebarConfig.isEnabled() && swiftSidebarConfig.getUpdateTicks() > 0) {
+            scheduler.runTaskTimerAsynchronously(this, swiftSidebar, swiftSidebarConfig.getUpdateTicks(),
+                    swiftSidebarConfig.getUpdateTicks());
+        }
+
+        if (swiftNametagConfig.isEnabled() && swiftNametagConfig.getUpdateTicks() > 0) {
+            scheduler.runTaskTimerAsynchronously(this, swiftNametag, swiftNametagConfig.getUpdateTicks(),
+                    swiftNametagConfig.getUpdateTicks());
+        }
 
         getCommand("swiftboard").setExecutor(new SwiftBoardCommandExecutor(this));
     }

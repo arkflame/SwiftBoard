@@ -21,7 +21,8 @@ public class SwiftNametag implements Runnable {
     private final SwiftNametagConfig swiftNametagConfig;
     private final Map<Player, Nametag> nametags = new ConcurrentHashMap<>();
 
-    public SwiftNametag(final Plugin plugin, final ScoreboardManager scoreboardManager, final SwiftNametagConfig swiftNametagConfig) {
+    public SwiftNametag(final Plugin plugin, final ScoreboardManager scoreboardManager,
+            final SwiftNametagConfig swiftNametagConfig) {
         this.plugin = plugin;
         this.scoreboardManager = scoreboardManager;
         this.swiftNametagConfig = swiftNametagConfig;
@@ -75,14 +76,16 @@ public class SwiftNametag implements Runnable {
         final String prefix = getPrefix(player);
         final String suffix = getSuffix(player);
 
-        nametag.update(prefix, suffix);
-        nametags.put(player, nametag);
+        if (prefix != null || suffix != null) {
+            nametag.update(prefix, suffix);
+            nametags.put(player, nametag);
 
-        for (final Scoreboard sb1 : scoreboardManager.getScoreboards()) {
-            final Player player1 = sb1.getPlayer();
+            for (final Scoreboard sb1 : scoreboardManager.getScoreboards()) {
+                final Player player1 = sb1.getPlayer();
 
-            update(sb1, playerName, prefix, suffix);
-            update(sb, player1.getName(), getPrefix(player1), getSuffix(player1));
+                update(sb1, playerName, prefix, suffix);
+                update(sb, player1.getName(), getPrefix(player1), getSuffix(player1));
+            }
         }
     }
 
