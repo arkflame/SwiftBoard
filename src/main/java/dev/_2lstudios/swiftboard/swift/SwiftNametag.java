@@ -13,15 +13,18 @@ import dev._2lstudios.swiftboard.hooks.PlaceholderAPIHook;
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
+import dev._2lstudios.swiftboard.swift.config.SwiftNametagConfig;
 
 public class SwiftNametag implements Runnable {
     private final Plugin plugin;
     private final ScoreboardManager scoreboardManager;
+    private final SwiftNametagConfig swiftNametagConfig;
     private final Map<Player, Nametag> nametags = new ConcurrentHashMap<>();
 
-    public SwiftNametag(final Plugin plugin, final ScoreboardManager scoreboardManager) {
+    public SwiftNametag(final Plugin plugin, final ScoreboardManager scoreboardManager, final SwiftNametagConfig swiftNametagConfig) {
         this.plugin = plugin;
         this.scoreboardManager = scoreboardManager;
+        this.swiftNametagConfig = swiftNametagConfig;
     }
 
     private String setPlaceholders(final Player player, final String string) {
@@ -29,11 +32,11 @@ public class SwiftNametag implements Runnable {
     }
 
     public String getPrefix(final Player player) {
-        return setPlaceholders(player, "&a~&7");
+        return setPlaceholders(player, swiftNametagConfig.getPrefix());
     }
 
     public String getSuffix(final Player player) {
-        return setPlaceholders(player, "&c %player_health%");
+        return setPlaceholders(player, swiftNametagConfig.getSuffix());
     }
 
     public void removePlayer(final Player player) {
