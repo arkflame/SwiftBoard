@@ -4,7 +4,10 @@ author: ${author}
 main: ${mainClass}
 version: ${version}
 url: ${url}
-depend: [ ProtocolLib ]
+soft-depend:
+  - PlaceholderAPI
+depend:
+  - ProtocolLib
 commands:
   swiftboard:
     description: "Manage SwiftBoard"
