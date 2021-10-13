@@ -151,8 +151,11 @@ public class Scoreboard {
         final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
         final StructureModifier<Optional<?>> optionals = packet.getModifier().withType(Optional.class);
 
-        integers.writeSafely(0, mode); // mode
-        integers.writeSafely(1, mode); // mode
+        if (integers.size() > 1) {
+            integers.write(1, mode); // mode
+        } else if (integers.size() > 0) {
+            integers.write(0, mode); // mode
+        }
 
         strings.writeSafely(0, name); // team name
         strings.writeSafely(1, displayName); // team display name
