@@ -10,10 +10,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import dev._2lstudios.swiftboard.hooks.PlaceholderAPIHook;
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
-import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatColor;
 
 public class SwiftSidebar implements Runnable {
@@ -38,7 +38,7 @@ public class SwiftSidebar implements Runnable {
     }
 
     private String setPlaceholders(final Player player, final String string) {
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, string));
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, string));
     }
 
     private String sendLine(final Scoreboard scoreboard, final String line, final int index)

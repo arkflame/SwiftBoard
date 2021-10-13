@@ -9,10 +9,10 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
+import dev._2lstudios.swiftboard.hooks.PlaceholderAPIHook;
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
-import me.clip.placeholderapi.PlaceholderAPI;
 
 public class SwiftNametag implements Runnable {
     private final Plugin plugin;
@@ -25,12 +25,12 @@ public class SwiftNametag implements Runnable {
     }
 
     public String getPrefix(final Player player) {
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(player, "&a~&7"));
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, "&a~&7"));
     }
 
     public String getSuffix(final Player player) {
         return ChatColor.translateAlternateColorCodes('&',
-                PlaceholderAPI.setPlaceholders(player, "&c %player_health%"));
+        PlaceholderAPIHook.setPlaceholders(player, "&c %player_health%"));
     }
 
     public void removePlayer(final Player player) {
