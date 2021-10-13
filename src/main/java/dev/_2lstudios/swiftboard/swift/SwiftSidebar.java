@@ -33,8 +33,10 @@ public class SwiftSidebar implements Runnable {
 
     public void setLines(final Player player, final List<String> lines) {
         if (lines != null) {
-            Collections.reverse(lines);
-            scoreboardLines.put(player, lines);
+            final List<String> linesCopy = new ArrayList<String>(lines);
+
+            Collections.reverse(linesCopy);
+            scoreboardLines.put(player, linesCopy);
         } else {
             scoreboardLines.remove(player);
         }
