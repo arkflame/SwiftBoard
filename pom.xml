@@ -7,7 +7,7 @@
 
     <name>SwiftBoard</name>
     <description>Asynchronous Scoreboard API using packets.</description>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <url>https://github.com/2lstudios-mc/SwiftBoard</url>
 
     <properties>
