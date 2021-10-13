@@ -1,7 +1,6 @@
 package dev._2lstudios.swiftboard.listeners;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -17,7 +16,8 @@ public class PlayerJoinListener implements Listener {
     private final SwiftSidebar swiftSidebar;
     private final SwiftNametag swiftNametag;
 
-    public PlayerJoinListener(final ScoreboardManager scoreboardManager, final SwiftSidebar swiftSidebar, final SwiftNametag swiftNametag) {
+    public PlayerJoinListener(final ScoreboardManager scoreboardManager, final SwiftSidebar swiftSidebar,
+            final SwiftNametag swiftNametag) {
         this.swiftSidebar = swiftSidebar;
         this.scoreboardManager = scoreboardManager;
         this.swiftNametag = swiftNametag;
@@ -27,10 +27,11 @@ public class PlayerJoinListener implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent event) {
         final Player player = event.getPlayer();
 
+        scoreboardManager.create(player);
+
         try {
-            scoreboardManager.create(player);
             swiftNametag.playerJoin(player);
-        } catch (final Exception e) {
+        } catch (final InvocationTargetException e) {
             e.printStackTrace();
         }
     }
