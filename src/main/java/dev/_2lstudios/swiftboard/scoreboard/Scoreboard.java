@@ -167,7 +167,7 @@ public class Scoreboard {
             team.setDisplayName(WrappedChatComponent.fromText(displayName)); // team display name
             team.setPrefix(WrappedChatComponent.fromText(prefix)); // prefix
             team.setSuffix(WrappedChatComponent.fromText(suffix)); // suffix
-            team.setTeamColor(ChatColor.RESET); // color
+            team.setTeamColor(ChatColor.RESET); // TODO: We want to keep the prefix last color
             optionals.write(0, Optional.of(team.getHandle()));
         }
 
