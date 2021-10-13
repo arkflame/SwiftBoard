@@ -1,4 +1,4 @@
-package dev._2lstudios.swiftboard.scoreboard;
+package dev._2lstudios.swiftboard.scoreboard.wrappers;
 
     import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.Team.OptionStatus;

@@ -19,6 +19,8 @@ import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import dev._2lstudios.swiftboard.scoreboard.wrappers.WrappedScoreboardTeam;
+
 public class Scoreboard {
     private final ProtocolManager protocolManager;
     private final Player player;
