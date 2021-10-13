@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.comphenix.protocol.PacketType;
@@ -15,6 +16,7 @@ import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.EnumWrappers.ScoreboardAction;
 import com.comphenix.protocol.wrappers.WrappedChatComponent;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Scoreboard {
@@ -142,19 +144,32 @@ public class Scoreboard {
 
     private PacketContainer generateTeamUpdatePacket(final int mode, final String name, final String displayName, final String prefix, final String suffix) {
         final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
+        final StructureModifier<Integer> integers = packet.getIntegers();
         final StructureModifier<String> strings = packet.getStrings();
         final StructureModifier<WrappedChatComponent> chatComponents = packet.getChatComponents();
+        final StructureModifier<Optional<?>> optionals = packet.getModifier().withType(Optional.class);
+
+        integers.writeSafely(0, mode); // mode
+        integers.writeSafely(1, mode); // mode
 
         strings.writeSafely(0, name); // team name
-        packet.getIntegers().writeSafely(1, 0); // mode
-
         strings.writeSafely(1, displayName); // team display name
         strings.writeSafely(2, prefix); // prefix
         strings.writeSafely(3, suffix); // suffix
 
-        chatComponents.writeSafely(0, WrappedChatComponent.fromText(displayName)); // team display
+        chatComponents.writeSafely(0, WrappedChatComponent.fromText(displayName)); // team display name
         chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix
         chatComponents.writeSafely(2, WrappedChatComponent.fromText(suffix)); // suffix
+
+        if (optionals.size() > 0) {
+            final WrappedScoreboardTeam team = WrappedScoreboardTeam.fromHandle(optionals.read(0).get());
+            
+            team.setDisplayName(WrappedChatComponent.fromText(displayName)); // team display name
+            team.setPrefix(WrappedChatComponent.fromText(prefix)); // prefix
+            team.setSuffix(WrappedChatComponent.fromText(suffix)); // suffix
+            team.setTeamColor(ChatColor.RESET); // color
+            optionals.write(0, Optional.of(team.getHandle()));
+        }
 
         return packet;
     }
@@ -165,7 +180,6 @@ public class Scoreboard {
             final Team team = new Team(teamDisplayName, prefix, suffix, entities);
             final PacketContainer packet = generateTeamUpdatePacket(0, teamName, teamDisplayName, prefix, suffix);
 
-            packet.getIntegers().writeSafely(0, entities.size()); // player count
             packet.getSpecificModifier(Collection.class).writeSafely(0, entities); // players
 
             protocolManager.sendServerPacket(player, packet);
@@ -196,8 +210,9 @@ public class Scoreboard {
         if (teams.containsKey(teamName)) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_TEAM);
 
-            packet.getStrings().writeSafely(0, teamName); // team name
+            packet.getIntegers().writeSafely(0, 1); // mode
             packet.getIntegers().writeSafely(1, 1); // mode
+            packet.getStrings().writeSafely(0, teamName); // team name
             
             protocolManager.sendServerPacket(player, packet);
             teams.remove(teamName);
