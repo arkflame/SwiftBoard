@@ -7,4 +7,4 @@ url: ${url}
 depend: [ ProtocolLib ]
 commands:
   swiftboard:
-    description: "Manage SwiftBoard stuff."
+    description: "Manage SwiftBoard"
