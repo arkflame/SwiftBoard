@@ -12,7 +12,7 @@ public class SwiftNametagConfig {
         this.enabled = section.getBoolean("enabled");
         this.updateTicks = section.getInt("update-ticks");
         this.prefix = section.getString("prefix");
-        this.prefix = section.getString("prefix");
+        this.suffix = section.getString("suffix");
     }
 
     public boolean isEnabled() {
