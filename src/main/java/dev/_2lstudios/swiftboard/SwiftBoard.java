@@ -66,7 +66,7 @@ public class SwiftBoard extends JavaPlugin {
             scoreboardManager.create(player);
         }
 
-        swiftHealth = new SwiftHealth(this, scoreboardManager);
+        swiftHealth = new SwiftHealth(this, scoreboardManager, swiftHealthConfig);
         swiftSidebar = new SwiftSidebar(this, scoreboardManager);
         swiftNametag = new SwiftNametag(this, scoreboardManager, swiftNametagConfig);
 

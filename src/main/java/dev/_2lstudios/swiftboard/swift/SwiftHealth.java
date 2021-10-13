@@ -2,21 +2,23 @@ package dev._2lstudios.swiftboard.swift;
 
 import java.lang.reflect.InvocationTargetException;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
+import dev._2lstudios.swiftboard.swift.config.SwiftHealthConfig;
 
 public class SwiftHealth implements Runnable {
     private final Plugin plugin;
     private final ScoreboardManager scoreboardManager;
+    private final SwiftHealthConfig swiftHealthConfig;
 
-    public SwiftHealth(final Plugin plugin, final ScoreboardManager scoreboardManager) {
+    public SwiftHealth(final Plugin plugin, final ScoreboardManager scoreboardManager, final SwiftHealthConfig swiftHealthConfig) {
         this.plugin = plugin;
         this.scoreboardManager = scoreboardManager;
+        this.swiftHealthConfig = swiftHealthConfig;
     }
 
     @Override
@@ -27,7 +29,7 @@ public class SwiftHealth implements Runnable {
                     final Player player = sb2.getPlayer();
 
                     if (!sb1.containsObjective("swifthealth")) {
-                        sb1.createObjective("swifthealth", ChatColor.RED + "❤", HealthDisplay.INTEGER);
+                        sb1.createObjective("swifthealth", swiftHealthConfig.getIcon(), HealthDisplay.INTEGER);
                         sb1.displayObjective(2, "swifthealth");
                     }
 
