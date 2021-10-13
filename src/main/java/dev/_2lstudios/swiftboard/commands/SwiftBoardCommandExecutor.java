@@ -20,14 +20,15 @@ public class SwiftBoardCommandExecutor implements CommandExecutor {
         if (args.length > 0) {
             if (args[0].equals("reload")) {
                 swiftBoard.reloadConfig();
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully reloaded SwiftBoard"));
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cInvalid argument: " + args[0]));
             }
         } else {
             final StringBuilder helpMessageBuilder = new StringBuilder();
 
-            helpMessageBuilder.append("&aSwiftBoard commands:");
-            helpMessageBuilder.append("&e%label% reload&7 - &bReload the configuration");
+            helpMessageBuilder.append("&aSwiftBoard commands:\n");
+            helpMessageBuilder.append("&e%label% reload&7 - &bReload the configuration\n");
             helpMessageBuilder.append("&7&oSwiftBoard was made by 2LStudios");
 
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
