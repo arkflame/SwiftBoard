@@ -32,9 +32,12 @@ public class SwiftSidebar implements Runnable {
     }
 
     public void setLines(final Player player, final List<String> lines) {
-        Collections.reverse(lines);
-
-        scoreboardLines.put(player, lines);
+        if (lines != null) {
+            Collections.reverse(lines);
+            scoreboardLines.put(player, lines);
+        } else {
+            scoreboardLines.remove(player);
+        }
     }
 
     private String setPlaceholders(final Player player, final String string) {
