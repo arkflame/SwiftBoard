@@ -8,6 +8,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 
+import dev._2lstudios.swiftboard.commands.SwiftBoardCommandExecutor;
 import dev._2lstudios.swiftboard.listeners.PlayerChangedWorldListener;
 import dev._2lstudios.swiftboard.listeners.PlayerJoinListener;
 import dev._2lstudios.swiftboard.listeners.PlayerQuitListener;
@@ -77,6 +78,8 @@ public class SwiftBoard extends JavaPlugin {
         scheduler.runTaskTimerAsynchronously(this, swiftHealth, swiftHealthConfig.getUpdateTicks(), swiftHealthConfig.getUpdateTicks());
         scheduler.runTaskTimerAsynchronously(this, swiftSidebar, swiftSidebarConfig.getUpdateTicks(), swiftSidebarConfig.getUpdateTicks());
         scheduler.runTaskTimerAsynchronously(this, swiftNametag, swiftNametagConfig.getUpdateTicks(), swiftNametagConfig.getUpdateTicks());
+
+        getCommand("swiftboard").setExecutor(new SwiftBoardCommandExecutor(this));
     }
 
     @Override
