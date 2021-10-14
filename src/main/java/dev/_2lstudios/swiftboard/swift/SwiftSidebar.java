@@ -42,7 +42,11 @@ public class SwiftSidebar implements Runnable {
         }
     }
 
-    private String setPlaceholders(final Player player, final String string) {
+    private String setPlaceholders(final Player player, String string) {
+        if (string.length() > 40) {
+            string = string.substring(0, 40);
+        }
+
         return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, string));
     }
 
