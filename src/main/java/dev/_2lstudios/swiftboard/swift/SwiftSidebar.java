@@ -99,7 +99,7 @@ public class SwiftSidebar implements Runnable {
                     try {
                         for (int i = 0; i < lines.size() - 1; i++) {
                             final String sentLine = sendLine(scoreboard, lines.get(i), i);
-                            System.out.println(sentLine);
+
                             sentLines.add(sentLine);
                         }
                     } finally {
