@@ -43,11 +43,13 @@ public class SwiftSidebar implements Runnable {
     }
 
     private String format(final Player player, String text) {
+        text = ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, text));
+
         if (text.length() > 40) {
             text = text.substring(0, 40);
         }
 
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, text));
+        return text;
     }
 
     private String sendLine(final Scoreboard scoreboard, final String line, final int index)
@@ -97,7 +99,7 @@ public class SwiftSidebar implements Runnable {
                     try {
                         for (int i = 0; i < lines.size() - 1; i++) {
                             final String sentLine = sendLine(scoreboard, lines.get(i), i);
-
+                            System.out.println(sentLine);
                             sentLines.add(sentLine);
                         }
                     } finally {
