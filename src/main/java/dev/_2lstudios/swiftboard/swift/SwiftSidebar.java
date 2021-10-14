@@ -42,12 +42,12 @@ public class SwiftSidebar implements Runnable {
         }
     }
 
-    private String setPlaceholders(final Player player, String string) {
-        if (string.length() > 40) {
-            string = string.substring(0, 40);
+    private String format(final Player player, String text) {
+        if (text.length() > 40) {
+            text = text.substring(0, 40);
         }
 
-        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, string));
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, text));
     }
 
     private String sendLine(final Scoreboard scoreboard, final String line, final int index)
@@ -66,7 +66,7 @@ public class SwiftSidebar implements Runnable {
             return formattedLine;
         } else {
             final Player player = scoreboard.getPlayer();
-            final String formattedLine = setPlaceholders(player, line);
+            final String formattedLine = format(player, line);
 
             scoreboard.updateScore("swiftsidebar", formattedLine, index);
 
@@ -83,7 +83,7 @@ public class SwiftSidebar implements Runnable {
 
                 if (!lines.isEmpty()) {
                     final List<String> sentLines = new ArrayList<>();
-                    final String title = setPlaceholders(player, lines.get(lines.size() - 1));
+                    final String title = format(player, lines.get(lines.size() - 1));
 
                     if (scoreboard.containsObjective("swiftsidebar")) {
                         if (!title.equals(scoreboard.getObjective("swiftsidebar").getDisplayName())) {
