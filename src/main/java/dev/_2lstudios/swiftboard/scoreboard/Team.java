@@ -27,11 +27,11 @@ public class Team {
     }
 
     protected void addEntities(final List<String> entities) {
-        entities.addAll(entities);
+        this.entities.addAll(entities);
     }
 
     protected void removeEntities(final List<String> entities) {
-        entities.removeAll(entities);
+        this.entities.removeAll(entities);
     }
 
     public String getTeamDisplayName() {
