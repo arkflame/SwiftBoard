@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -75,7 +76,7 @@ public class SwiftBoard extends JavaPlugin {
     
             try {
                 if (swiftNametagConfig.isEnabled()) {
-                    swiftNametag.playerJoin(player);
+                    swiftNametag.init(player);
                 }
             } catch (final InvocationTargetException e) {
                 e.printStackTrace();
@@ -107,6 +108,12 @@ public class SwiftBoard extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        final Server server = getServer();
+        final BukkitScheduler scheduler = server.getScheduler();
+
+        HandlerList.unregisterAll(this);
+        scheduler.cancelTasks(this);
+
         try {
             for (final Scoreboard scoreboard : scoreboardManager.getScoreboards()) {
                 scoreboard.clearObjectives();

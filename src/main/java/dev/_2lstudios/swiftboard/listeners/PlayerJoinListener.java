@@ -42,7 +42,7 @@ public class PlayerJoinListener implements Listener {
 
         try {
             if (swiftNametagConfig.isEnabled()) {
-                swiftNametag.playerJoin(player);
+                swiftNametag.init(player);
             }
         } catch (final InvocationTargetException e) {
             e.printStackTrace();

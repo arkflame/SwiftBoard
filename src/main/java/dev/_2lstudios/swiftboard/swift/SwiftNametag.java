@@ -69,7 +69,7 @@ public class SwiftNametag implements Runnable {
         }
     }
 
-    public void playerJoin(final Player player) throws InvocationTargetException {
+    public void init(final Player player) throws InvocationTargetException {
         final Scoreboard sb = scoreboardManager.getScoreboard(player);
         final String playerName = player.getName();
         final Nametag nametag = nametags.getOrDefault(player, new Nametag("", ""));

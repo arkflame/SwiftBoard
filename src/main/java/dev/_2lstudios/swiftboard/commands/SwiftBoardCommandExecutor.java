@@ -19,7 +19,8 @@ public class SwiftBoardCommandExecutor implements CommandExecutor {
             final String[] args) {
         if (args.length > 0) {
             if (args[0].equals("reload")) {
-                swiftBoard.reloadConfig();
+                swiftBoard.onDisable();
+                swiftBoard.onEnable();
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully reloaded SwiftBoard"));
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cInvalid argument: " + args[0]));
