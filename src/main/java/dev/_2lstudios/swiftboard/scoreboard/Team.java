@@ -31,7 +31,7 @@ public class Team {
     }
 
     protected void removeEntities(final List<String> entities) {
-        entities.removeAll(entities);
+        entities.clear();
     }
 
     public String getTeamDisplayName() {
