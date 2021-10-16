@@ -54,6 +54,8 @@ public class SwiftBoard extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        reloadConfig();
+
         final Server server = getServer();
         final BukkitScheduler scheduler = server.getScheduler();
         final PluginManager pluginManager = server.getPluginManager();
