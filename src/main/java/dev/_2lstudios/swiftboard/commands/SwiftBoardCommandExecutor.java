@@ -19,9 +19,13 @@ public class SwiftBoardCommandExecutor implements CommandExecutor {
             final String[] args) {
         if (args.length > 0) {
             if (args[0].equals("reload")) {
-                swiftBoard.onDisable();
-                swiftBoard.onEnable();
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully reloaded SwiftBoard"));
+                if (sender.hasPermission("swiftboard.reload") {
+                    swiftBoard.onDisable();
+                    swiftBoard.onEnable();
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aSuccessfully reloaded SwiftBoard"));
+                } else {
+                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou don't have permissions!"));
+                }
             } else {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cInvalid argument: " + args[0]));
             }
