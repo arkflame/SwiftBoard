@@ -97,7 +97,7 @@ public class SwiftNametag implements Runnable {
             for (final Scoreboard sb : scoreboards) {
                 if (!sb.containsObjective("swiftnametag")) {
                     sb.createObjective("swiftnametag", "swiftnametag", HealthDisplay.INTEGER);
-                    sb.displayObjective(0, "swiftnametag");
+                    sb.displayObjective(1, "swiftnametag");
                 }
 
                 update(sb.getPlayer());
@@ -139,3 +139,4 @@ public class SwiftNametag implements Runnable {
         }
     }
 }
+#LinsaMetemela
