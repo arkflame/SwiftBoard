@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import dev._2lstudios.swiftboard.hooks.PlaceholderAPIHook;
+import dev._2lstudios.swiftboard.swift.utils.Hex;
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
