@@ -11,7 +11,7 @@ import net.md_5.bungee.api.ChatColor;
 public class Hex {
     private static final Pattern HEX_PATTERN = Pattern.compile("#[a-fA-F0-9]{6}}");
 
-    public static String format(String text) {
+    public static String format(final Player, String text) {
         if (Bukkit.getVersion().contains("1.16")) {
             Matcher match = HEX_PATTERN.matcher(text);
 
@@ -22,6 +22,6 @@ public class Hex {
             }
         }
         
-        return text;
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, text));;
     }
 }
