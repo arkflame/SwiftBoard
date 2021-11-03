@@ -43,7 +43,7 @@ public class SwiftSidebar implements Runnable {
     }
 
     private String format(final Player player, String text) {
-        text = ChatColor.translateAlternateColorCodes('&', PlaceholderAPIHook.setPlaceholders(player, text));
+        text = Hex.format(player, text);
 
         if (text.length() > 40) {
             text = text.substring(0, 40);
