@@ -16,8 +16,12 @@ public class Team {
         this.entities = entities;
     }
 
+    public boolean equals(final String str1, final String str2) {
+        return (str1 == null && str2 == null) || (str1 != null && str2 != null && str1.equals(str2));
+    }
+
     public boolean hasChanges(final String teamDisplayName, final String prefix, final String suffix) {
-        return !this.teamDisplayName.equals(teamDisplayName) || !this.prefix.equals(prefix) || !this.suffix.equals(suffix);
+        return !equals(this.teamDisplayName, teamDisplayName) || !equals(this.prefix, prefix) || !equals(this.suffix, suffix);
     }
 
     protected void update(final String teamDisplayName, final String prefix, final String suffix) {

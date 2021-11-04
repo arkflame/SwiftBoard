@@ -184,8 +184,8 @@ public class Scoreboard {
 
         strings.writeSafely(0, name); // team name
         strings.writeSafely(1, displayName); // team display name
-        strings.writeSafely(2, prefix); // prefix
-        strings.writeSafely(3, suffix); // suffix
+        if (!prefix.isEmpty()) strings.writeSafely(2, prefix); // prefix
+        if (!suffix.isEmpty()) strings.writeSafely(3, suffix); // suffix
 
         chatComponents.writeSafely(0, WrappedChatComponent.fromText(displayName)); // team display name
         chatComponents.writeSafely(1, WrappedChatComponent.fromText(prefix)); // prefix

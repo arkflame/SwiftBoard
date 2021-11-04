@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 import dev._2lstudios.swiftboard.hooks.PlaceholderAPIHook;
-import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
 import dev._2lstudios.swiftboard.swift.config.SwiftNametagConfig;
@@ -95,11 +94,6 @@ public class SwiftNametag implements Runnable {
             final Collection<Scoreboard> scoreboards = scoreboardManager.getScoreboards();
 
             for (final Scoreboard sb : scoreboards) {
-                if (!sb.containsObjective("swiftnametag")) {
-                    sb.createObjective("swiftnametag", "swiftnametag", HealthDisplay.INTEGER);
-                    sb.displayObjective(0, "swiftnametag");
-                }
-
                 update(sb.getPlayer());
             }
         } catch (final InvocationTargetException e) {
