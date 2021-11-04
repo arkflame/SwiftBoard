@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
-import dev._2lstudios.swiftboard.swift.utils.Hex;
+import dev._2lstudios.swiftboard.swift.utils.Colors;
 import dev._2lstudios.swiftboard.scoreboard.HealthDisplay;
 import dev._2lstudios.swiftboard.scoreboard.Scoreboard;
 import dev._2lstudios.swiftboard.scoreboard.ScoreboardManager;
@@ -43,7 +43,7 @@ public class SwiftSidebar implements Runnable {
     }
 
     private String format(final Player player, String text) {
-        text = Hex.format(player, text);
+        text = Colors.format(player, PlaceholderAPIHook.setPlaceholders(player, text));
 
         if (text.length() > 40) {
             text = text.substring(0, 40);
