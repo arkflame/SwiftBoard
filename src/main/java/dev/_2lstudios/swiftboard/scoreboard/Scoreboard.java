@@ -1,11 +1,7 @@
 package dev._2lstudios.swiftboard.scoreboard;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 import com.comphenix.protocol.PacketType;
@@ -128,7 +124,7 @@ public class Scoreboard {
 
         final Objective objective = getObjective(name);
 
-        if (objective != null && (!objective.hasScore(entity) || objective.getScore(entity) != score)) {
+        if (objective != null && (!objective.hasScore(entity) || !Objects.equals(objective.getScore(entity), score))) {
             final PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.SCOREBOARD_SCORE);
 
             packet.getStrings().writeSafely(0, entity);

@@ -13,28 +13,26 @@ public class ScoreboardManager {
         return scoreboards.getOrDefault(player, null);
     }
 
-    public Scoreboard create(final Player player) {
+    public void create(final Player player) {
         if (!scoreboards.containsKey(player)) {
             final Scoreboard scoreboard = new Scoreboard(player);
 
             scoreboards.put(player, scoreboard);
 
-            return scoreboard;
+            return;
         }
 
-        return scoreboards.get(player);
+        scoreboards.get(player);
     }
 
-    public Scoreboard remove(final Player player) {
+    public void remove(final Player player) {
         if (scoreboards.containsKey(player)) {
             final Scoreboard scoreboard = scoreboards.get(player);
 
             scoreboards.remove(player);
 
-            return scoreboard;
         }
 
-        return null;
     }
 
     public Collection<Scoreboard> getScoreboards() {

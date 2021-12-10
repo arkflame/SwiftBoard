@@ -146,36 +146,36 @@ public class WrappedScoreboardTeam extends AbstractWrapper {
     }
 
     public boolean getFriendlyFire() {
-        int intValue = ((Integer) FRIENDLY_FLAGS.get(this.handle)).intValue();
+        int intValue = (Integer) FRIENDLY_FLAGS.get(this.handle);
         return (intValue & 0x01) == 1;
     }
 
     public void setFriendlyFire(boolean value) {
-        int currentValue = ((Integer) FRIENDLY_FLAGS.get(this.handle)).intValue();
+        int currentValue = (Integer) FRIENDLY_FLAGS.get(this.handle);
         if (getFriendlyFire() && !value) {
             // is already friendly fire but should not be
-            FRIENDLY_FLAGS.set(this.handle, Integer.valueOf(currentValue ^ 0x01));
+            FRIENDLY_FLAGS.set(this.handle, currentValue ^ 0x01);
         }
         else if (value) {
             // is already friendly fire but should not be
-            FRIENDLY_FLAGS.set(this.handle, Integer.valueOf(currentValue | 0x01));
+            FRIENDLY_FLAGS.set(this.handle, currentValue | 0x01);
         }
     }
 
     public boolean getFriendlySeeInvisible() {
-        int intValue = ((Integer) FRIENDLY_FLAGS.get(this.handle)).intValue();
+        int intValue = (Integer) FRIENDLY_FLAGS.get(this.handle);
         return (intValue & 0x02) == 2;
     }
 
     public void setFriendlySeeInvisible(boolean value) {
-        int currentValue = ((Integer) FRIENDLY_FLAGS.get(this.handle)).intValue();
+        int currentValue = (Integer) FRIENDLY_FLAGS.get(this.handle);
         if (getFriendlyFire() && !value) {
             // is already friendly fire but should not be
-            FRIENDLY_FLAGS.set(this.handle, Integer.valueOf(currentValue ^ 0x02));
+            FRIENDLY_FLAGS.set(this.handle, currentValue ^ 0x02);
         }
         else if (value) {
             // is already friendly fire but should not be
-            FRIENDLY_FLAGS.set(this.handle, Integer.valueOf(currentValue | 0x02));
+            FRIENDLY_FLAGS.set(this.handle, currentValue | 0x02);
         }
     }
 }
