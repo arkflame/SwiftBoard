@@ -101,7 +101,7 @@ public class SwiftNametag implements Runnable {
         }
     }
 
-    private class Nametag {
+    private static class Nametag {
         private String prefix;
         private String suffix;
 

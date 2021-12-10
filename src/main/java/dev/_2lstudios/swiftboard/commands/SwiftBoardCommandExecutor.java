@@ -30,14 +30,13 @@ public class SwiftBoardCommandExecutor implements CommandExecutor {
                 sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cInvalid argument: " + args[0]));
             }
         } else {
-            final StringBuilder helpMessageBuilder = new StringBuilder();
 
-            helpMessageBuilder.append("&aSwiftBoard commands:\n");
-            helpMessageBuilder.append("&e%label% reload&7 - &bReload the configuration\n");
-            helpMessageBuilder.append("&7&oSwiftBoard was made by 2LStudios");
+            String helpMessageBuilder = "&aSwiftBoard commands:\n" +
+                    "&e%label% reload&7 - &bReload the configuration\n" +
+                    "&7&oSwiftBoard was made by 2LStudios";
 
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    helpMessageBuilder.toString().replace("%label%", label)));
+                    helpMessageBuilder.replace("%label%", label)));
         }
 
         return true;

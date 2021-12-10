@@ -33,7 +33,7 @@ public class SwiftSidebar implements Runnable {
 
     public void setLines(final Player player, final List<String> lines) {
         if (lines != null) {
-            final List<String> linesCopy = new ArrayList<String>(lines);
+            final List<String> linesCopy = new ArrayList<>(lines);
 
             Collections.reverse(linesCopy);
             scoreboardLines.put(player, linesCopy);
@@ -58,7 +58,7 @@ public class SwiftSidebar implements Runnable {
             final StringBuilder emptyBuilder = new StringBuilder();
 
             for (int y = 0; y < index; y++) {
-                emptyBuilder.append(ChatColor.RESET.toString());
+                emptyBuilder.append(ChatColor.RESET);
             }
 
             final String formattedLine = emptyBuilder.toString();
