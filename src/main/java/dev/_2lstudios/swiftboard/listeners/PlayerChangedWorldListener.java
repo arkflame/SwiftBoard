@@ -1,5 +1,7 @@
 package dev._2lstudios.swiftboard.listeners;
 
+import java.util.List;
+
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,7 +23,12 @@ public class PlayerChangedWorldListener implements Listener {
     public void onPlayerChangeWorld(final PlayerChangedWorldEvent event) {
         final Player player = event.getPlayer();
         final String worldName = player.getWorld().getName();
+        final List<String> newLines = swiftSidebarConfig.getLines(worldName);
 
-        swiftSidebar.setLines(player, swiftSidebarConfig.getLines(worldName));
+        if (newLines != null) {
+            swiftSidebar.setLines(player, newLines);
+        } else if (!swiftSidebar.getWorld().equals("default")) {
+            swiftSidebar.setLines(player, null);
+        }
     }
 }

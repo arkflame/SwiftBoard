@@ -37,7 +37,7 @@ public class PlayerJoinListener implements Listener {
         scoreboardManager.create(player);
 
         if (swiftSidebarConfig.isEnabled()) {
-            swiftSidebar.setLines(player, swiftSidebarConfig.getLines(worldName));
+            swiftSidebar.setLines(player, swiftSidebarConfig.getLinesOrDefault(worldName));
         }
 
         try {

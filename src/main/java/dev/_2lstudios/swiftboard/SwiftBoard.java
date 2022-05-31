@@ -73,7 +73,7 @@ public class SwiftBoard extends JavaPlugin {
             scoreboardManager.create(player);
 
             if (swiftSidebarConfig.isEnabled()) {
-                swiftSidebar.setLines(player, swiftSidebarConfig.getLines(player.getWorld().getName()));
+                swiftSidebar.setLines(player, swiftSidebarConfig.getLinesOrDefault(player.getWorld().getName()));
             }
     
             try {

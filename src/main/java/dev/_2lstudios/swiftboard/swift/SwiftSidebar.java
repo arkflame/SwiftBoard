@@ -21,6 +21,7 @@ public class SwiftSidebar implements Runnable {
     private final ScoreboardManager scoreboardManager;
     private final Map<Player, List<String>> currentLines = new ConcurrentHashMap<>();
     private final Map<Player, List<String>> scoreboardLines = new ConcurrentHashMap<>();
+    private String world = "default";
 
     public SwiftSidebar(final Plugin plugin, final ScoreboardManager scoreboardManager) {
         this.plugin = plugin;
@@ -31,15 +32,20 @@ public class SwiftSidebar implements Runnable {
         scoreboardLines.remove(player);
     }
 
-    public void setLines(final Player player, final List<String> lines) {
+    public void setLines(final Player player, final List<String> lines, String world) {
         if (lines != null) {
             final List<String> linesCopy = new ArrayList<String>(lines);
 
             Collections.reverse(linesCopy);
             scoreboardLines.put(player, linesCopy);
+            this.world = world;
         } else {
             scoreboardLines.remove(player);
         }
+    }
+
+    public void setLines(final Player player, final List<String> lines) {
+        setLines(player, lines, "default");
     }
 
     private String format(final Player player, String text) {
@@ -137,5 +143,9 @@ public class SwiftSidebar implements Runnable {
         } catch (final InvocationTargetException e) {
             plugin.getLogger().info("Failed to send SwiftBoard to players!");
         }
+    }
+
+    public String getWorld() {
+        return world;
     }
 }

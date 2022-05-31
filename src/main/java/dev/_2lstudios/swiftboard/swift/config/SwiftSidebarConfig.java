@@ -33,7 +33,11 @@ public class SwiftSidebarConfig {
         return updateTicks;
     }
 
-    public List<String> getLines(final String worldName) {
+    public List<String> getLinesOrDefault(final String worldName) {
         return worlds.getOrDefault(worldName, worlds.getOrDefault("default", null));
+    }
+
+    public List<String> getLines(final String worldName) {
+        return worlds.getOrDefault(worldName, null);
     }
 }
